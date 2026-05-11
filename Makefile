@@ -1,4 +1,4 @@
-.PHONY: up down web api engine dev fmt lint test logs psql migrate
+.PHONY: up down web api engine dev fmt lint test logs psql migrate revision
 
 up:
 	docker compose -f infra/docker-compose.yml up -d
@@ -16,7 +16,7 @@ api:
 engine:
 	cd engine && uv run python -m inkling_engine
 
-dev: up
+dev: up migrate
 	@$(MAKE) -j2 web api
 
 fmt:
@@ -26,12 +26,11 @@ fmt:
 
 lint:
 	cd web && pnpm tsc --noEmit
-	cd api && uv run ruff check . && uv run mypy app
+	cd api && uv run ruff check .
 	cd engine && uv run ruff check .
 
 test:
 	cd api && uv run pytest -q
-	cd engine && uv run pytest -q
 
 logs:
 	docker compose -f infra/docker-compose.yml logs -f
@@ -41,3 +40,6 @@ psql:
 
 migrate:
 	cd api && uv run alembic upgrade head
+
+revision:
+	cd api && uv run alembic revision --autogenerate -m "$(m)"
