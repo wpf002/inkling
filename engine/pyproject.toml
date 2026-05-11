@@ -1,0 +1,27 @@
+[project]
+name = "engine"
+version = "0.1.0"
+description = "Add your description here"
+authors = [
+    { name = "Will Foti", email = "wfoti71992@gmail.com" }
+]
+requires-python = ">=3.14"
+dependencies = [
+    "anthropic>=0.101.0",
+    "numpy>=2.4.4",
+    "pydantic>=2.13.4",
+    "scipy>=1.17.1",
+]
+
+[project.scripts]
+engine = "engine:main"
+
+[build-system]
+requires = ["uv_build>=0.11.2,<0.12.0"]
+build-backend = "uv_build"
+
+[dependency-groups]
+dev = [
+    "pytest>=9.0.3",
+    "ruff>=0.15.12",
+]

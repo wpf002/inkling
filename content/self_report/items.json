@@ -1,0 +1,14 @@
+{
+  "items": [
+    {"id": "sr01", "construct": "risk_tolerance",     "prompt": "I'm comfortable making decisions with incomplete information.", "scale": "likert_5"},
+    {"id": "sr02", "construct": "loss_aversion",      "prompt": "Losing $100 feels worse than gaining $100 feels good.",         "scale": "likert_5"},
+    {"id": "sr03", "construct": "trust",              "prompt": "Most people can be trusted in a one-time interaction.",         "scale": "likert_5"},
+    {"id": "sr04", "construct": "fairness",           "prompt": "I'd punish unfair behavior even at a cost to myself.",          "scale": "likert_5"},
+    {"id": "sr05", "construct": "attribution",        "prompt": "When someone is short with me, they usually mean it personally.","scale": "likert_5"},
+    {"id": "sr06", "construct": "deliberation",       "prompt": "I prefer to think things through rather than go with my gut.",  "scale": "likert_5"},
+    {"id": "sr07", "construct": "moral_utilitarian",  "prompt": "Outcomes matter more than rules.",                              "scale": "likert_5"},
+    {"id": "sr08", "construct": "stress_response",    "prompt": "Tight deadlines bring out my best work.",                       "scale": "likert_5"},
+    {"id": "sr09", "construct": "attention",          "prompt": "I notice small details others miss.",                           "scale": "likert_5"},
+    {"id": "sr10", "construct": "novelty",            "prompt": "I'd rather try something new than stick with what I know works.","scale": "likert_5"}
+  ]
+}
