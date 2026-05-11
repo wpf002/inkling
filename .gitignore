@@ -1,0 +1,45 @@
+# --- Node ---
+node_modules/
+.next/
+out/
+*.log
+.pnpm-debug.log*
+.npm
+
+# --- Python ---
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+.python-version
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+
+# --- uv ---
+uv.lock
+
+# --- Env ---
+.env
+.env.local
+.env.*.local
+!.env.example
+
+# --- OS ---
+.DS_Store
+Thumbs.db
+
+# --- IDE ---
+.vscode/
+.idea/
+*.swp
+
+# --- Build ---
+dist/
+build/
+coverage/
+
+# --- Session data (never commit player data) ---
+sessions/
+exports/
+*.session.json
