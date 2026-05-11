@@ -29,9 +29,18 @@ mkdir -p content/{rounds,dilemmas,ads,scams,recruiter,self_report}
 echo "==> Initializing Next.js (web)..."
 if [ ! -f web/package.json ]; then
   cd web
+  # pnpm 11 aborts post-install when packages (sharp, unrs-resolver) need build-script
+  # approval. The scaffold itself succeeds, so tolerate the non-zero exit and
+  # immediately install with an explicit allowlist before adding more deps.
   pnpm create next-app@latest . \
     --ts --tailwind --app --src-dir \
-    --import-alias "@/*" --no-eslint --use-pnpm --yes
+    --import-alias "@/*" --no-eslint --use-pnpm --yes || true
+  cat > pnpm-workspace.yaml <<'YAML'
+allowBuilds:
+  sharp: true
+  unrs-resolver: true
+YAML
+  pnpm install
   pnpm add zod @tanstack/react-query lucide-react framer-motion html2canvas
   pnpm add -D @types/node prettier
   cd ..
