@@ -23,8 +23,19 @@ export const sessionStateSchema = z.object({
   has_self_report: z.boolean(),
   completed_at: z.string().nullable(),
   created_at: z.string(),
+  completed_rounds: z.array(z.string()).default([]),
+  next_round: z.string().nullable().default(null),
 });
 export type SessionState = z.infer<typeof sessionStateSchema>;
+
+export const roundManifestEntrySchema = z.object({
+  id: z.string(),
+  title: z.string(),
+  duration_s: z.number(),
+  content_file: z.string().optional(),
+  constructs: z.array(z.string()),
+});
+export type RoundManifestEntry = z.infer<typeof roundManifestEntrySchema>;
 
 export const selfReportItemDefSchema = z.object({
   id: z.string(),

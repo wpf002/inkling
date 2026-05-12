@@ -90,17 +90,17 @@ inkling/
 
 ## Common tasks
 
-| Command        | Action                            |
-| -------------- | --------------------------------- |
-| `make up`      | Start Postgres                    |
-| `make api`     | Run FastAPI on :8000              |
-| `make web`     | Run Next.js on :3000              |
-| `make dev`     | Start infra + web + api           |
-| `make migrate` | Run alembic migrations            |
-| `make fmt`     | Format all code                   |
-| `make lint`    | Type-check + lint everything      |
-| `make test`    | Run pytest across api + engine    |
-| `make psql`    | Drop into the dev DB              |
+| Command        | Action                                                          |
+| -------------- | --------------------------------------------------------------- |
+| `make up`      | Start Postgres                                                  |
+| `make api`     | Run FastAPI on :8000                                            |
+| `make web`     | Run Next.js on :3000                                            |
+| `make dev`     | Start infra + web + api                                         |
+| `make migrate` | Run alembic migrations                                          |
+| `make fmt`     | Format all code                                                 |
+| `make lint`    | Type-check + lint everything (round-agnostic + lexicon checks)  |
+| `make test`    | Run pytest across api + engine                                  |
+| `make psql`    | Drop into the dev DB                                            |
 
 ## Roadmap
 
@@ -118,23 +118,34 @@ inkling/
 - [x] Rule-based engine: loss aversion + risk tolerance + stress response
 - [x] Minimal reveal showing just Round 1 output
 
-### Phase 2 — Remaining rounds (weeks 4–5)
+### Phase 2 — Remaining rounds + lexicon enforcement (weeks 4–5) — DONE
 
-- [ ] Pursuit, Trust, Memory, Read, Dilemma — each follows Round 1's pattern
+- [x] Pursuit, Trust, Memory, Read, Dilemma — each follows Round 1's pattern
+- [x] Round orchestrator chaining all six rounds via `/play`
+- [x] `docs/lexicon.md` + `make check-lexicon` wired into `make lint`
 
 ### Phase 3 — The reveal (weeks 6–7)
 
 - [ ] Stated vs Revealed layer
-- [ ] All inference tiers
+- [ ] All eight reveal layers (high → medium → overreach → product → targeting → defense → share)
 - [ ] LLM overreach layer
 - [ ] Targeting simulation
+- [ ] Profile-as-product card
 - [ ] Share card generation
 
-### Phase 4 — Launch (week 8)
+### Phase 4 — Reflection mode (weeks 8–9)
+
+- [ ] Opt-in post-reveal: GAD-7, PHQ-9
+- [ ] Behavioral mirror against the reveal
+- [ ] Reflection prompts
+- [ ] Crisis resources and Throughline handoff
+
+### Phase 5 — Launch (week 10)
 
 - [ ] Railway deploy (web + api + postgres)
 - [ ] Rate limiting
 - [ ] Analytics (Plausible, no PII)
+- [ ] Custom domain
 - [ ] Soft launch
 
 ## Ethical guardrails

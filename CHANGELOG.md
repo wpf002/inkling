@@ -1,5 +1,91 @@
 # Changelog
 
+## Phase 2 — Rounds 2–6 + lexicon enforcement (2026-05-12)
+
+### Phase 2 added
+
+- **Content**: five new authored round files under `content/rounds/`:
+  - `pursuit/trials.json` — 30 timed-target trials, window ramp from
+    1500 ms to 600 ms, five difficulty spikes at indices [6,11,17,22,26],
+    6 distractor frames.
+  - `trust/npcs.json` — 4 partners (fair, selfish, generous,
+    unpredictable) × 2 interactions, $10 endowment, 3× multiplier.
+  - `memory/config.json` — Corsi 3×3 grid config (start span 3, two
+    trials per span, stop after two failures, 600 ms per block).
+  - `read/scenarios.json` — 8 ambiguous social scenarios, each with 4
+    options tagged on hostile/benign × internal/external axes.
+  - `dilemma/dilemmas.json` — 6 canonical moral dilemmas (lever,
+    footbridge, lifeboat, hospital, drowning child, remote switch); 2
+    impersonal + 4 personal, 2 on a 6000 ms clock.
+- **Engine** (`engine/src/inkling_engine/rules/`): five new scorer
+  modules (`pursuit.py`, `trust.py`, `memory.py`, `read.py`,
+  `dilemma.py`), each self-registers. 14 new inferences across the five
+  rounds (4 + 3 + 3 + 2 + 2). All scorers are stateless functions over
+  RoundEventDTO; none reach into the DB or import each other.
+- **Manifest** (`content/rounds/manifest.json`): each round entry now
+  carries a `content_file` field so the API can serve a generic
+  `/content/round-content?round=X` endpoint; per-round `constructs`
+  lists were updated to match the construct names actually emitted by
+  the scorers (so the idempotency check in `score_and_persist_round`
+  works without per-round special-casing).
+- **API**:
+  - `GET /content/round-content?round=X` — round-agnostic content fetch
+    that reads the file named by the manifest's `content_file`.
+  - `app/services/orchestrator.py` — derives `completed_rounds` and
+    `next_round` from the inferences table + the manifest. No new DB
+    column: state is *derived*, not stored.
+  - `GET /sessions/{token}` extended with `completed_rounds: list[str]`
+    and `next_round: str | null`.
+- **Web** (`web/src/app/`): five new round pages
+  (`round/{pursuit,trust,memory,read,dilemma}/page.tsx`) plus `play/`,
+  the orchestrator landing. `self-report` now navigates to `/play`. The
+  reveal stub now reads inferences across all six rounds and formats
+  each one per `docs/inferences.md`. The reusable layers
+  (`lib/eventCapture.ts`, `components/round/CountdownRing.tsx`,
+  `components/round/Stage.tsx`) were not touched.
+- **Tests**: 4 new engine test files (`test_{pursuit,trust,memory,read,
+  dilemma}.py`) totaling 16 cases — typical, extreme, and underpowered
+  per round. Existing 9 choice cases + 12 API cases unchanged. Combined:
+  21 API + 25 engine = 46 passing.
+- **Lint pipeline** — `make check-lexicon` added and wired into
+  `make lint` after `check-round-agnostic`. The check greps for clinical
+  and pop-psych vocabulary (psychopath, sociopath, narcissist, gaslight,
+  toxic person, inner child, healing journey, MBTI, enneagram, empath,
+  love language, "triggered", "trauma\b", traumatic, traumatized,
+  disorder, diagnosis, pathological, comorbid) across `web/src`,
+  `content`, `engine/src`, `api/app`, and `docs`. The lexicon doc
+  (`docs/lexicon.md`) is excluded.
+- **Docs**: `docs/lexicon.md` (new) — the binding lexicon contract.
+  `docs/inferences.md` extended with construct + citation entries for
+  every new inference. `docs/phase-2-content-review.md` (new) — Phase 2
+  audit artifact, confirming criteria (a)–(g) for every Round 5
+  scenario and Round 6 dilemma.
+- **Smoke test**: `scripts/smoke_phase2.py` + `make smoke-phase2`
+  target. Walks land → consent → self-report → six rounds in manifest
+  order against the in-process app, asserts exactly 17 inference rows.
+  Identifies the silent scorer on failure.
+
+### Phase 2 changed
+
+- `make lint` description in README updated to note both round-agnostic
+  and lexicon checks.
+- README roadmap now spans 5 phases (Phase 2 done, Phase 3 reveal,
+  Phase 4 reflection mode, Phase 5 launch).
+
+### Phase 2 phase-completion check outcomes
+
+- **G.1 (`check-round-agnostic`)** — already existed and was wired into
+  `make lint` at Phase 1. Verified passing as the first action of Phase
+  2; no refactor needed.
+- **G.2 (`check-lexicon`)** — newly added. Retrospective pass against
+  the existing Phase 0/1 codebase was green on first run; no
+  remediation needed.
+- **G.3 (Round 5/6 content review)** — `docs/phase-2-content-review.md`
+  authored as a Phase 2 audit artifact; (a)–(g) confirmed for every
+  scenario and dilemma.
+- **G.4 (17-row smoke test)** — `make smoke-phase2` exits 0 with
+  message `smoke_phase2 OK — 17 inference rows persisted`.
+
 ## Phase 1 — Round 1 (Choice) end-to-end (2026-05-11)
 
 ### Phase 1 added

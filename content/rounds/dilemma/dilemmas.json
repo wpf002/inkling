@@ -1,0 +1,54 @@
+{
+  "round_id": "dilemma",
+  "hurry_ms": 6000,
+  "dilemmas": [
+    {
+      "id": "dil_lever",
+      "type": "impersonal",
+      "hurried": false,
+      "scenario": "A runaway trolley is heading toward five workers on the track. You can pull a lever that diverts it onto a side track, where one worker is standing. Pulling the lever will save the five but cost the one.",
+      "option_util":  {"id": "u", "text": "Pull the lever."},
+      "option_deon":  {"id": "d", "text": "Do nothing."}
+    },
+    {
+      "id": "dil_footbridge",
+      "type": "personal",
+      "hurried": false,
+      "scenario": "Same runaway trolley, same five workers. You're on a footbridge above the tracks beside a heavy stranger. The only way to stop the trolley is to push the stranger off the bridge. Their fall will stop the trolley and save the five.",
+      "option_util":  {"id": "u", "text": "Push the stranger."},
+      "option_deon":  {"id": "d", "text": "Do nothing."}
+    },
+    {
+      "id": "dil_lifeboat",
+      "type": "personal",
+      "hurried": false,
+      "scenario": "You're in an overcrowded lifeboat that will sink unless one person goes overboard. An injured passenger is already unconscious. Pushing them out saves everyone else; doing nothing means the boat sinks and all of you drown.",
+      "option_util":  {"id": "u", "text": "Push the unconscious passenger out."},
+      "option_deon":  {"id": "d", "text": "Do nothing and let the boat sink."}
+    },
+    {
+      "id": "dil_hospital",
+      "type": "personal",
+      "hurried": false,
+      "scenario": "Five patients in a hospital will die today without transplants. A healthy visitor in the waiting room is a perfect match for all five. Harvesting their organs would save all five at the cost of the visitor.",
+      "option_util":  {"id": "u", "text": "Harvest the visitor's organs."},
+      "option_deon":  {"id": "d", "text": "Don't operate on the visitor."}
+    },
+    {
+      "id": "dil_drowning_child",
+      "type": "impersonal",
+      "hurried": true,
+      "scenario": "You're walking past a shallow pond in your nice clothes and see a small child drowning. Wading in will ruin a few hundred dollars of clothes. No one else is around.",
+      "option_util":  {"id": "u", "text": "Wade in and pull the child out."},
+      "option_deon":  {"id": "d", "text": "Walk on and call for help."}
+    },
+    {
+      "id": "dil_switch_remote",
+      "type": "impersonal",
+      "hurried": true,
+      "scenario": "A signal failure is sending a packed commuter train into a collapsed tunnel. You can remotely route it to an empty siding, but the siding runs through a maintenance bay where one worker is finishing a repair.",
+      "option_util":  {"id": "u", "text": "Route the train to the siding."},
+      "option_deon":  {"id": "d", "text": "Leave the routing alone."}
+    }
+  ]
+}

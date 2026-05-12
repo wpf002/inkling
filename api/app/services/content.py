@@ -36,3 +36,35 @@ def load_round_gambles(round_id: str) -> dict:
     """
     path = ROUNDS_DIR / round_id / "gambles.json"
     return json.loads(path.read_text())
+
+
+def round_content_filename(round_id: str) -> str | None:
+    for r in load_round_manifest()["rounds"]:
+        if r["id"] == round_id:
+            return r.get("content_file")
+    return None
+
+
+@lru_cache
+def load_round_content(round_id: str) -> dict:
+    """Load whatever content file the manifest declares for a round.
+
+    Round-agnostic: the manifest names the file (e.g. `gambles.json`,
+    `trials.json`); this just reads it. Raises FileNotFoundError if the
+    manifest does not name one or the file is missing.
+    """
+    fname = round_content_filename(round_id)
+    if not fname:
+        raise FileNotFoundError(round_id)
+    return json.loads((ROUNDS_DIR / round_id / fname).read_text())
+
+
+def manifest_rounds_in_order() -> list[dict]:
+    return list(load_round_manifest()["rounds"])
+
+
+def constructs_for_round(round_id: str) -> list[str]:
+    for r in load_round_manifest()["rounds"]:
+        if r["id"] == round_id:
+            return list(r.get("constructs", []))
+    return []

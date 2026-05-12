@@ -34,3 +34,5 @@ class SessionState(BaseModel):
     has_self_report: bool
     completed_at: datetime | None
     created_at: datetime
+    completed_rounds: list[str] = Field(default_factory=list)
+    next_round: str | None = None

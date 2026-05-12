@@ -122,6 +122,13 @@ export const api = {
       roundGamblesResponseSchema,
       { method: "GET" },
     ),
+
+  getRoundContent: <T>(round: string): Promise<T> =>
+    request(
+      `/content/round-content?round=${encodeURIComponent(round)}`,
+      z.unknown() as z.ZodType<T>,
+      { method: "GET" },
+    ),
 };
 
 export { ApiError };

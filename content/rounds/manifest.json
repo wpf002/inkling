@@ -1,10 +1,59 @@
 {
   "rounds": [
-    {"id": "choice",  "title": "Choice",  "duration_s": 180, "constructs": ["loss_aversion", "risk_tolerance", "stress_response"]},
-    {"id": "pursuit", "title": "Pursuit", "duration_s": 120, "constructs": ["attention", "reaction_time", "frustration"]},
-    {"id": "trust",   "title": "Trust",   "duration_s": 180, "constructs": ["trust", "retaliation"]},
-    {"id": "memory",  "title": "Memory",  "duration_s": 120, "constructs": ["working_memory", "processing_speed"]},
-    {"id": "read",    "title": "Read",    "duration_s": 180, "constructs": ["attribution"]},
-    {"id": "dilemma", "title": "Dilemma", "duration_s": 180, "constructs": ["moral_utilitarian", "fairness"]}
+    {
+      "id": "choice",
+      "title": "Choice",
+      "duration_s": 180,
+      "content_file": "gambles.json",
+      "constructs": ["loss_aversion", "risk_tolerance", "stress_response"]
+    },
+    {
+      "id": "pursuit",
+      "title": "Pursuit",
+      "duration_s": 120,
+      "content_file": "trials.json",
+      "constructs": [
+        "reaction_time_profile",
+        "sustained_attention",
+        "frustration_tolerance",
+        "response_inhibition"
+      ]
+    },
+    {
+      "id": "trust",
+      "title": "Trust",
+      "duration_s": 180,
+      "content_file": "npcs.json",
+      "constructs": [
+        "initial_trust_propensity",
+        "adaptation_rate",
+        "retaliation_tendency"
+      ]
+    },
+    {
+      "id": "memory",
+      "title": "Memory",
+      "duration_s": 120,
+      "content_file": "config.json",
+      "constructs": [
+        "working_memory_span",
+        "processing_speed",
+        "performance_under_load"
+      ]
+    },
+    {
+      "id": "read",
+      "title": "Read",
+      "duration_s": 180,
+      "content_file": "scenarios.json",
+      "constructs": ["attribution_style", "deliberation"]
+    },
+    {
+      "id": "dilemma",
+      "title": "Dilemma",
+      "duration_s": 180,
+      "content_file": "dilemmas.json",
+      "constructs": ["utilitarian_leaning", "personal_impersonal_sensitivity"]
+    }
   ]
 }

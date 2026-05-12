@@ -10,6 +10,7 @@ from app.schemas.session import (
     SessionCreateResponse,
     SessionState,
 )
+from app.services import orchestrator as orchestrator_service
 from app.services import sessions as session_service
 
 router = APIRouter(prefix="/sessions", tags=["sessions"])
@@ -47,6 +48,7 @@ async def get_session(
         session = await session_service.get_session_by_token(db, token)
     except session_service.SessionNotFound as e:
         raise HTTPException(status.HTTP_404_NOT_FOUND, "session not found") from e
+    completed = await orchestrator_service.completed_round_ids(db, session.id)
     return SessionState(
         session_id=session.id,
         anonymous_token=session.anonymous_token,
@@ -55,6 +57,8 @@ async def get_session(
         has_self_report=await session_service.has_self_report(db, session.id),
         completed_at=session.completed_at,
         created_at=session.created_at,
+        completed_rounds=completed,
+        next_round=orchestrator_service.next_round_id(completed),
     )
 
 

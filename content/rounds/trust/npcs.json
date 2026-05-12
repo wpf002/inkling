@@ -1,0 +1,49 @@
+{
+  "round_id": "trust",
+  "endowment": 10,
+  "multiplier": 3,
+  "npcs": [
+    {
+      "id": "npc_a",
+      "display_name": "Alex",
+      "hint": "Plays it straight.",
+      "return_rate_mean": 0.50,
+      "return_rate_jitter": 0.05,
+      "persona": "fair"
+    },
+    {
+      "id": "npc_b",
+      "display_name": "Sam",
+      "hint": "Keeps most of the table.",
+      "return_rate_mean": 0.10,
+      "return_rate_jitter": 0.04,
+      "persona": "selfish"
+    },
+    {
+      "id": "npc_c",
+      "display_name": "Jordan",
+      "hint": "Tends to share back.",
+      "return_rate_mean": 0.70,
+      "return_rate_jitter": 0.05,
+      "persona": "generous"
+    },
+    {
+      "id": "npc_d",
+      "display_name": "Taylor",
+      "hint": "Hard to predict.",
+      "return_rate_mean": 0.45,
+      "return_rate_jitter": 0.35,
+      "persona": "unpredictable"
+    }
+  ],
+  "trials": [
+    {"trial_id": "t1", "npc_id": "npc_a", "first": true},
+    {"trial_id": "t2", "npc_id": "npc_b", "first": true},
+    {"trial_id": "t3", "npc_id": "npc_c", "first": true},
+    {"trial_id": "t4", "npc_id": "npc_d", "first": true},
+    {"trial_id": "t5", "npc_id": "npc_a", "first": false},
+    {"trial_id": "t6", "npc_id": "npc_b", "first": false},
+    {"trial_id": "t7", "npc_id": "npc_c", "first": false},
+    {"trial_id": "t8", "npc_id": "npc_d", "first": false}
+  ]
+}

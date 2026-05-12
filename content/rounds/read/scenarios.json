@@ -1,0 +1,85 @@
+{
+  "round_id": "read",
+  "scenarios": [
+    {
+      "id": "read_01",
+      "scenario": "You said hi to a coworker in the hallway. They walked past without responding.",
+      "options": [
+        {"id": "a", "text": "They were ignoring me on purpose.",            "tags": ["hostile", "external"]},
+        {"id": "b", "text": "They didn't notice me.",                       "tags": ["benign",  "external"]},
+        {"id": "c", "text": "I must have said something earlier that bugged them.", "tags": ["benign",  "internal"]},
+        {"id": "d", "text": "They're short with everyone, not just me.",    "tags": ["hostile", "external"]}
+      ]
+    },
+    {
+      "id": "read_02",
+      "scenario": "You sent a friend a long text last night and they still haven't replied.",
+      "options": [
+        {"id": "a", "text": "They're upset about something I said.",        "tags": ["hostile", "internal"]},
+        {"id": "b", "text": "They got busy and forgot.",                    "tags": ["benign",  "external"]},
+        {"id": "c", "text": "I came on too strong with such a long message.","tags": ["benign",  "internal"]},
+        {"id": "d", "text": "They don't really value the friendship.",      "tags": ["hostile", "external"]}
+      ]
+    },
+    {
+      "id": "read_03",
+      "scenario": "Your manager scheduled a one-on-one for tomorrow with no agenda. It's not on the regular cadence.",
+      "options": [
+        {"id": "a", "text": "Something's wrong and I'm about to hear about it.", "tags": ["hostile", "external"]},
+        {"id": "b", "text": "They probably just want to catch up.",         "tags": ["benign",  "external"]},
+        {"id": "c", "text": "I've been off my game lately and they noticed.", "tags": ["hostile", "internal"]},
+        {"id": "d", "text": "They have an update they want to share early.","tags": ["benign",  "external"]}
+      ]
+    },
+    {
+      "id": "read_04",
+      "scenario": "A driver cut you off in traffic and didn't signal.",
+      "options": [
+        {"id": "a", "text": "They were being aggressive on purpose.",       "tags": ["hostile", "external"]},
+        {"id": "b", "text": "They were distracted or in a rush.",           "tags": ["benign",  "external"]},
+        {"id": "c", "text": "I was in their blind spot.",                   "tags": ["benign",  "internal"]},
+        {"id": "d", "text": "People drive like this everywhere now.",       "tags": ["hostile", "external"]}
+      ]
+    },
+    {
+      "id": "read_05",
+      "scenario": "You shared an idea in a meeting. The room went quiet, then someone pivoted to the next topic.",
+      "options": [
+        {"id": "a", "text": "Everyone thought the idea was bad.",           "tags": ["hostile", "internal"]},
+        {"id": "b", "text": "People were still thinking it over.",          "tags": ["benign",  "external"]},
+        {"id": "c", "text": "I didn't explain it clearly enough.",          "tags": ["benign",  "internal"]},
+        {"id": "d", "text": "The group always shuts down ideas that aren't from the leads.", "tags": ["hostile", "external"]}
+      ]
+    },
+    {
+      "id": "read_06",
+      "scenario": "Your neighbor has been short with you for the past few days. Nothing obvious happened between you.",
+      "options": [
+        {"id": "a", "text": "They've decided they don't like me.",          "tags": ["hostile", "internal"]},
+        {"id": "b", "text": "They're going through something unrelated.",   "tags": ["benign",  "external"]},
+        {"id": "c", "text": "I did something to annoy them and I don't remember what.", "tags": ["benign",  "internal"]},
+        {"id": "d", "text": "They're like this with everyone in the building.", "tags": ["hostile", "external"]}
+      ]
+    },
+    {
+      "id": "read_07",
+      "scenario": "You're at a party. Two people are talking and glance over at you a few times.",
+      "options": [
+        {"id": "a", "text": "They're talking about me.",                    "tags": ["hostile", "internal"]},
+        {"id": "b", "text": "I'm standing near the door they keep looking at.", "tags": ["benign",  "external"]},
+        {"id": "c", "text": "There's something off about how I'm dressed.", "tags": ["hostile", "internal"]},
+        {"id": "d", "text": "They recognize me from somewhere.",            "tags": ["benign",  "external"]}
+      ]
+    },
+    {
+      "id": "read_08",
+      "scenario": "You apply for a role and don't hear back for two weeks.",
+      "options": [
+        {"id": "a", "text": "They didn't think I was a fit and didn't bother to say.", "tags": ["hostile", "internal"]},
+        {"id": "b", "text": "Hiring is slow this time of year.",            "tags": ["benign",  "external"]},
+        {"id": "c", "text": "My resume didn't make a strong enough case.",  "tags": ["benign",  "internal"]},
+        {"id": "d", "text": "They already had someone in mind from the start.", "tags": ["hostile", "external"]}
+      ]
+    }
+  ]
+}

@@ -41,7 +41,7 @@ export default function SelfReportPage() {
         })),
       });
     },
-    onSuccess: () => router.push("/round/choice"),
+    onSuccess: () => router.push("/play"),
     onError: (e) => setError(e instanceof Error ? e.message : "request failed"),
   });
 
@@ -61,11 +61,11 @@ export default function SelfReportPage() {
     <main className="mx-auto flex min-h-dvh max-w-2xl flex-col gap-10 px-6 py-16">
       <div className="space-y-3">
         <h1 className="text-2xl font-semibold tracking-tight sm:text-3xl">
-          Before we start
+          Ten questions first.
         </h1>
         <p className="text-sm leading-relaxed text-muted">
-          Ten quick questions. There&apos;s no right answer — this is just a
-          baseline to compare against what the game infers later.
+          What you say here is the baseline. Later, the game will compare it
+          to what you actually do.
         </p>
         <div className="flex items-center gap-3 text-xs text-muted">
           <div className="h-1 flex-1 rounded-full bg-white/10">

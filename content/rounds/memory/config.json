@@ -1,0 +1,12 @@
+{
+  "round_id": "memory",
+  "grid_size": 9,
+  "grid_rows": 3,
+  "grid_cols": 3,
+  "start_span": 3,
+  "trials_per_span": 2,
+  "fail_threshold": 2,
+  "stimulus_ms_per_block": 600,
+  "interval_ms": 200,
+  "max_span": 9
+}
