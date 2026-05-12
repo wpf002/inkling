@@ -8,6 +8,8 @@ from sqlalchemy import text
 from app.core.config import get_settings
 from app.core.database import get_engine
 from app.routers import content as content_router
+from app.routers import round_complete as round_complete_router
+from app.routers import round_events as round_events_router
 from app.routers import sessions as sessions_router
 
 logger = logging.getLogger("inkling.api")
@@ -42,6 +44,8 @@ app.add_middleware(
 )
 
 app.include_router(sessions_router.router)
+app.include_router(round_events_router.router)
+app.include_router(round_complete_router.router)
 app.include_router(content_router.router)
 
 

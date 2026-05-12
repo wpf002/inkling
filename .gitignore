@@ -10,6 +10,7 @@ out/
 __pycache__/
 *.py[cod]
 *.egg-info/
+.venv
 .venv/
 .python-version
 .pytest_cache/

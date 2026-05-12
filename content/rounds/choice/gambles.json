@@ -1,0 +1,12 @@
+{
+  "round_id": "choice",
+  "gambles": [
+    {"id": "g1", "win": 10,  "lose": 15},
+    {"id": "g2", "win": 25,  "lose": 15},
+    {"id": "g3", "win": 40,  "lose": 15},
+    {"id": "g4", "win": 100, "lose": 25}
+  ],
+  "conditions": ["unhurried", "hurried"],
+  "hurry_ms": 4000,
+  "alpha": 0.88
+}

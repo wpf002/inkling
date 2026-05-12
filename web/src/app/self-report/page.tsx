@@ -41,7 +41,7 @@ export default function SelfReportPage() {
         })),
       });
     },
-    onSuccess: () => router.push("/phase-1-stub"),
+    onSuccess: () => router.push("/round/choice"),
     onError: (e) => setError(e instanceof Error ? e.message : "request failed"),
   });
 

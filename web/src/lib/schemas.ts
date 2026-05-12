@@ -47,3 +47,43 @@ export const selfReportSubmissionSchema = z.object({
   responses: z.array(selfReportItemSchema).min(1),
 });
 export type SelfReportSubmission = z.infer<typeof selfReportSubmissionSchema>;
+
+export const roundEventSchema = z.object({
+  event_type: z.string().min(1).max(64),
+  payload: z.record(z.string(), z.unknown()),
+  t_ms: z.number().int().min(0),
+});
+export type RoundEventBody = z.infer<typeof roundEventSchema>;
+
+export const roundEventBatchResponseSchema = z.object({
+  accepted: z.number().int(),
+});
+
+export const inferenceSchema = z.object({
+  construct: z.string(),
+  tier: z.enum(["high", "medium", "overreach"]),
+  value: z.record(z.string(), z.unknown()),
+  confidence: z.number(),
+  evidence: z.record(z.string(), z.unknown()),
+});
+export type InferenceData = z.infer<typeof inferenceSchema>;
+
+export const roundCompleteResponseSchema = z.object({
+  inferences: z.array(inferenceSchema),
+});
+
+export const roundGambleSchema = z.object({
+  id: z.string(),
+  win: z.number(),
+  lose: z.number(),
+});
+export type RoundGamble = z.infer<typeof roundGambleSchema>;
+
+export const roundGamblesResponseSchema = z.object({
+  round_id: z.string(),
+  gambles: z.array(roundGambleSchema),
+  conditions: z.array(z.string()),
+  hurry_ms: z.number(),
+  alpha: z.number(),
+});
+export type RoundGamblesResponse = z.infer<typeof roundGamblesResponseSchema>;

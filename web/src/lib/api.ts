@@ -1,6 +1,10 @@
 import { z } from "zod";
 import {
   Consent,
+  RoundEventBody,
+  roundCompleteResponseSchema,
+  roundEventBatchResponseSchema,
+  roundGamblesResponseSchema,
   selfReportItemsResponseSchema,
   SelfReportItemDef,
   SelfReportSubmission,
@@ -82,6 +86,42 @@ export const api = {
     request("/content/self-report-items", selfReportItemsResponseSchema, {
       method: "GET",
     }),
+
+  postRoundEvents: (token: string, round: string, events: RoundEventBody[]) =>
+    request(
+      `/sessions/${token}/round-events`,
+      roundEventBatchResponseSchema,
+      {
+        method: "POST",
+        body: JSON.stringify({ round, events }),
+        token,
+      },
+    ),
+
+  postRoundComplete: (token: string, round: string) =>
+    request(
+      `/sessions/${token}/round-complete`,
+      roundCompleteResponseSchema,
+      {
+        method: "POST",
+        body: JSON.stringify({ round }),
+        token,
+      },
+    ),
+
+  getInferences: (token: string, round: string) =>
+    request(
+      `/sessions/${token}/inferences?round=${encodeURIComponent(round)}`,
+      roundCompleteResponseSchema,
+      { method: "GET", token },
+    ),
+
+  getRoundGambles: (round: string) =>
+    request(
+      `/content/round-gambles?round=${encodeURIComponent(round)}`,
+      roundGamblesResponseSchema,
+      { method: "GET" },
+    ),
 };
 
 export { ApiError };
