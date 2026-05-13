@@ -31,6 +31,23 @@ ensure_venv() {
   fi
 }
 
+# iCloud Drive sometimes offloads individual files inside web/node_modules,
+# which breaks the pnpm next wrapper at runtime. We can't relocate
+# node_modules outside the project root because Turbopack rejects
+# symlinks that escape it. Pragmatic fix: re-materialize any offloaded
+# files by re-running pnpm install at startup. It's a no-op (1-2s) when
+# everything is already on disk, and a full repair (10-20s) when iCloud
+# has been removing files.
+ensure_web_node_modules() {
+  # If the symlink-out-of-icloud experiment left a broken symlink, clear it.
+  if [ -L "web/node_modules" ]; then
+    log "removing stale web/node_modules symlink"
+    rm -f "web/node_modules"
+  fi
+  log "rehydrating web/node_modules (handles iCloud offload)"
+  ( cd web && pnpm install --prefer-offline )
+}
+
 free_port() {
   local port=$1 name=$2 pids
   pids=$(lsof -ti tcp:"$port" -sTCP:LISTEN 2>/dev/null || true)
@@ -47,6 +64,7 @@ free_port "$WEB_PORT" web
 
 ensure_venv api
 ensure_venv engine
+ensure_web_node_modules
 
 if ! docker ps --format '{{.Names}}' | grep -q '^ink_postgres$'; then
   log "starting postgres"

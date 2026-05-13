@@ -1,0 +1,47 @@
+{
+  "_note": "Scam scenario templates for Layer 6. These describe the patterns the player would most plausibly be targeted with given their inference profile. The framing names the pattern, not the person — 'a scenario like this is what you would see' rather than 'you would fall for'. Slots are {{construct_name}}, filled from the targeting module.",
+  "templates": [
+    {
+      "id": "scam_romance",
+      "type": "romance",
+      "vulnerability_keys": ["initial_trust_propensity", "attribution_style", "personal_impersonal_sensitivity"],
+      "scenario_template": "A new match seems {{initial_trust_propensity}} and asks to move the conversation off-platform within two days. They mention an emergency on day four and a small wire transfer on day six."
+    },
+    {
+      "id": "scam_irs_authority",
+      "type": "authority",
+      "vulnerability_keys": ["stress_response", "deliberation", "frustration_tolerance"],
+      "scenario_template": "A phone call presents an urgent tax demand with a short countdown. The voice is calm and {{stress_response}}-friendly. A 'one-time fix' fee is offered if you pay in the next ninety minutes."
+    },
+    {
+      "id": "scam_package_delivery",
+      "type": "logistics",
+      "vulnerability_keys": ["risk_tolerance", "adaptation_rate", "sustained_attention"],
+      "scenario_template": "A short text says a package needs a redelivery fee. The link looks close to your usual carrier. The page is fast, mobile-first, and {{risk_tolerance}}-friendly about asking for a card."
+    },
+    {
+      "id": "scam_investment",
+      "type": "investment",
+      "vulnerability_keys": ["risk_tolerance", "loss_aversion", "deliberation"],
+      "scenario_template": "A {{loss_aversion}}-friendly pitch frames a high-yield strategy as 'protective.' The site shows charts that match your watchlist. A countdown bonus appears at the third visit."
+    },
+    {
+      "id": "scam_tech_support",
+      "type": "tech_support",
+      "vulnerability_keys": ["frustration_tolerance", "working_memory_span", "performance_under_load"],
+      "scenario_template": "A browser pop-up impersonates a {{frustration_tolerance}}-friendly tone and asks you to call a number. The 'technician' walks you through screen-share and a small one-time charge."
+    },
+    {
+      "id": "scam_charity_urgency",
+      "type": "charity",
+      "vulnerability_keys": ["utilitarian_leaning", "personal_impersonal_sensitivity", "attribution_style"],
+      "scenario_template": "A short email frames an unfolding event and requests a {{utilitarian_leaning}} response right now. The donate page is plain, the case is specific, and the receipt arrives instantly."
+    },
+    {
+      "id": "scam_employer_payroll",
+      "type": "workplace",
+      "vulnerability_keys": ["initial_trust_propensity", "sustained_attention", "adaptation_rate"],
+      "scenario_template": "A message that looks internal asks you to confirm a new direct-deposit account because of a 'system migration.' The sender display name is right. The reply-to domain is one letter off."
+    }
+  ]
+}

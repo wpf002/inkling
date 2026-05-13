@@ -98,3 +98,37 @@ export const roundGamblesResponseSchema = z.object({
   alpha: z.number(),
 });
 export type RoundGamblesResponse = z.infer<typeof roundGamblesResponseSchema>;
+
+// --- Phase 3: reveal endpoints ---
+
+export const overreachResponseSchema = z.object({
+  inference: inferenceSchema,
+  cached: z.boolean(),
+});
+export type OverreachResponse = z.infer<typeof overreachResponseSchema>;
+
+export const statedVsRevealedResponseSchema = z.object({
+  inference: inferenceSchema.nullable(),
+});
+export type StatedVsRevealedResponse = z.infer<typeof statedVsRevealedResponseSchema>;
+
+export const brokerPricingResponseSchema = z.object({
+  inference: inferenceSchema,
+});
+export type BrokerPricingResponse = z.infer<typeof brokerPricingResponseSchema>;
+
+export const targetingResponseSchema = z.object({
+  ads: z.array(z.record(z.string(), z.unknown())),
+  scams: z.array(z.record(z.string(), z.unknown())),
+  recruiter: z.array(z.record(z.string(), z.unknown())),
+  top_constructs: z.array(z.string()),
+});
+export type TargetingResponse = z.infer<typeof targetingResponseSchema>;
+
+export const shareCardSchema = z.object({
+  id: z.number(),
+  image_dimensions: z.string(),
+  headline: z.string(),
+  inference_id: z.number().nullable(),
+});
+export type ShareCardResponse = z.infer<typeof shareCardSchema>;

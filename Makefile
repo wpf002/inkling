@@ -1,4 +1,4 @@
-.PHONY: up down web api engine dev fmt lint check-round-agnostic check-lexicon fix-venv-pth test smoke-phase2 verify-db logs psql migrate revision
+.PHONY: up down web api engine dev fmt lint check-round-agnostic check-lexicon fix-venv-pth test smoke-phase2 smoke-phase3 check-phase3 verify-db logs psql migrate revision
 
 up:
 	docker compose -f infra/docker-compose.yml up -d
@@ -50,12 +50,17 @@ check-round-agnostic:
 # docs/lexicon.md. The grep is intentionally case-insensitive and
 # whole-word against the forbidden vocabulary; the doc itself is
 # excluded so the rules can be documented without tripping the rule.
+# Phase 3 adds a second exclusion: content/reveal/forbidden_lexicon.json
+# is the JSON source of truth that the Overreach LLM prompt and the
+# post-generation filter both load — it must enumerate the strings
+# verbatim, same as docs/lexicon.md.
 check-lexicon:
 	@echo "==> Checking lexicon compliance..."
 	@! grep -rEnw -i \
 	    "psychopath|sociopath|narcissist|gaslight|toxic person|inner child|healing journey|MBTI|enneagram|empath|love language|triggered|trauma\b|traumatic|traumatized|disorder|diagnosis|pathological|comorbid" \
 	    web/src content engine/src api/app docs 2>/dev/null \
 	    | grep -v "docs/lexicon.md" \
+	    | grep -v "content/reveal/forbidden_lexicon.json" \
 	    || (echo "FAIL: forbidden lexicon term found (see docs/lexicon.md)" && exit 1)
 	@echo "OK"
 
@@ -75,6 +80,18 @@ test: fix-venv-pth
 # asserts the inferences table has exactly 17 rows for the session.
 smoke-phase2:
 	cd api && uv run python ../scripts/smoke_phase2.py
+
+# Phase 3 smoke test: extends smoke-phase2 with the 8-layer reveal —
+# asserts stated_vs_revealed, overreach (mocked LLM), broker_pricing,
+# targeting, share_card creation, and 8 reveal_layer_entered events.
+smoke-phase3:
+	cd api && uv run python ../scripts/smoke_phase3.py
+
+# Phase 3 phase-completion check: run lint (round-agnostic + lexicon),
+# the engine + API tests, and the Phase 3 smoke. Fails fast on the
+# first non-zero step.
+check-phase3: lint test smoke-phase3
+	@echo "==> Phase 3 phase-completion checks OK"
 
 # Same smoke flow, run against the live dev postgres on :5433. Asserts
 # 17 inference rows for the new session and cascade-deletes the session

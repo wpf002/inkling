@@ -15,8 +15,11 @@ class ShareCard(Base):
     session_id: Mapped[uuid.UUID] = mapped_column(
         UUIDType, ForeignKey("sessions.id", ondelete="CASCADE"), nullable=False, index=True
     )
-    image_path: Mapped[str] = mapped_column(String(512), nullable=False)
+    image_dimensions: Mapped[str] = mapped_column(String(16), nullable=False)
     headline: Mapped[str] = mapped_column(String(256), nullable=False)
+    inference_id: Mapped[int | None] = mapped_column(
+        BigIntPk, ForeignKey("inferences.id", ondelete="SET NULL"), nullable=True
+    )
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), nullable=False, server_default=func.now()
     )

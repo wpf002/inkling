@@ -1,0 +1,35 @@
+{
+  "_note": "Recruiter pitch templates for Layer 6. One is selected and rendered in a LinkedIn-style card. Slots are {{construct_name}}.",
+  "templates": [
+    {
+      "id": "rec_sales_ae",
+      "role": "sales",
+      "hook_keys": ["initial_trust_propensity", "adaptation_rate", "stress_response"],
+      "pitch_template": "Quick note — your profile reads like a strong AE. {{initial_trust_propensity}} on the first call, {{adaptation_rate}} on the second. We have a midmarket seat opening in two weeks. Open to a chat?"
+    },
+    {
+      "id": "rec_engineering_backend",
+      "role": "engineering",
+      "hook_keys": ["deliberation", "working_memory_span", "processing_speed"],
+      "pitch_template": "Reaching out because your profile reads {{deliberation}} with {{working_memory_span}} recall — the kind of profile we want on our backend platform. Hybrid, senior, equity refresh annually. Worth a 20-minute call?"
+    },
+    {
+      "id": "rec_ops_program_manager",
+      "role": "operations",
+      "hook_keys": ["sustained_attention", "performance_under_load", "frustration_tolerance"],
+      "pitch_template": "Hi — your profile reads {{sustained_attention}} with {{performance_under_load}} composure. We are staffing a program manager role across three regional teams. Twenty-five percent travel. Interested?"
+    },
+    {
+      "id": "rec_customer_success",
+      "role": "customer_success",
+      "hook_keys": ["initial_trust_propensity", "attribution_style", "frustration_tolerance"],
+      "pitch_template": "Hello — your read on social context is {{attribution_style}} and your reset under pressure is {{frustration_tolerance}}. We are hiring a senior CSM for an enterprise pod. Fully remote. Worth a quick exchange?"
+    },
+    {
+      "id": "rec_management_director",
+      "role": "management",
+      "hook_keys": ["utilitarian_leaning", "deliberation", "stress_response"],
+      "pitch_template": "Brief note — your profile reads {{utilitarian_leaning}} with {{deliberation}} on tradeoffs. We are recruiting a director of business operations. Reporting to the COO. Open to learning more?"
+    }
+  ]
+}

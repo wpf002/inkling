@@ -1,6 +1,8 @@
 import { z } from "zod";
 import {
+  brokerPricingResponseSchema,
   Consent,
+  overreachResponseSchema,
   RoundEventBody,
   roundCompleteResponseSchema,
   roundEventBatchResponseSchema,
@@ -11,6 +13,9 @@ import {
   sessionCreateResponseSchema,
   sessionStateSchema,
   SessionState,
+  shareCardSchema,
+  statedVsRevealedResponseSchema,
+  targetingResponseSchema,
 } from "./schemas";
 
 const API_URL =
@@ -129,6 +134,62 @@ export const api = {
       z.unknown() as z.ZodType<T>,
       { method: "GET" },
     ),
+
+  // --- Phase 3 reveal endpoints ---
+
+  postRevealEvent: (
+    token: string,
+    payload: { event_type: string; payload: Record<string, unknown>; t_ms: number },
+  ) =>
+    request(
+      `/sessions/${token}/reveal-event`,
+      z.object({ accepted: z.boolean() }),
+      {
+        method: "POST",
+        body: JSON.stringify(payload),
+        token,
+      },
+    ),
+
+  postOverreach: (token: string) =>
+    request(`/sessions/${token}/overreach`, overreachResponseSchema, {
+      method: "POST",
+      body: "{}",
+      token,
+    }),
+
+  postStatedVsRevealed: (token: string) =>
+    request(
+      `/sessions/${token}/stated-vs-revealed`,
+      statedVsRevealedResponseSchema,
+      { method: "POST", body: "{}", token },
+    ),
+
+  postBrokerPricing: (token: string) =>
+    request(
+      `/sessions/${token}/broker-pricing`,
+      brokerPricingResponseSchema,
+      { method: "POST", body: "{}", token },
+    ),
+
+  getTargeting: (token: string) =>
+    request(`/sessions/${token}/targeting`, targetingResponseSchema, {
+      method: "GET",
+      token,
+    }),
+
+  postShareCard: (
+    token: string,
+    payload: { image_dimensions: string; headline: string; inference_id: number | null },
+  ) =>
+    request(`/sessions/${token}/share-card`, shareCardSchema, {
+      method: "POST",
+      body: JSON.stringify(payload),
+      token,
+    }),
+
+  getRevealDismantle: () =>
+    request("/content/reveal-dismantle", z.unknown(), { method: "GET" }),
 };
 
 export { ApiError };

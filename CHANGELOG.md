@@ -1,5 +1,165 @@
 # Changelog
 
+## Phase 3 — The reveal (2026-05-12)
+
+### Phase 3 added
+
+- **Engine** (`engine/src/inkling_engine/`):
+  - `llm/overreach.py` — single-call Anthropic SDK overreach scorer
+    (Claude Sonnet 4.6 by default, configurable via `OVERREACH_MODEL`).
+    Returns one `Inference` row with `construct="overreach"`,
+    `tier="overreach"`, plus an estimated USD cost. Mockable via the
+    `client` arg for tests.
+  - `llm/prompts.py` — system + user prompt assembly. The forbidden
+    vocabulary list is loaded from `content/reveal/forbidden_lexicon.json`
+    (excluded from `make check-lexicon`) and enumerated verbatim in the
+    system prompt. `PROMPT_VERSION` is recorded in every persisted
+    Inference's `evidence` column.
+  - `llm/lexicon_filter.py` — post-generation regex scan over every text
+    leaf of the parsed payload. On hit: log + retry once with the
+    matched terms appended to the forbidden list. On second failure:
+    redact the offending blurb to a fixed placeholder rather than fail
+    the reveal.
+  - `reveal/stated_vs_revealed.py` — Layer 1 comparator. Maps 9 of 10
+    self-report items to specific gameplay value paths via fixed
+    normalizers, computes per-pair divergence on [0,1], surfaces the
+    top 3 as the punch.
+  - `reveal/pricing.py` — Layer 5 rule-based pricer. Tiered base prices
+    (high $0.010, medium $0.005, overreach trait $0.020, consumer
+    paragraph $0.050) × 1.25 aggregate-profile premium. Illustrative
+    against public broker CPM ranges; not audited.
+  - `reveal/targeting.py` — Layer 6 rule-based ad/scam/recruiter
+    selector. Scores templates by overlap between their `targeting_keys`
+    and the player's strongest constructs, breaks ties by category
+    diversity, fills `{{construct}}` slots from a fixed adjective
+    vocabulary so output stays lexicon-clean by construction.
+- **Content** (all pass `make check-lexicon`):
+  - `content/reveal/forbidden_lexicon.json` — single source of truth
+    for the LLM's forbidden vocabulary. Excluded from the lexicon grep
+    on the same grounds as `docs/lexicon.md` (the file documents the
+    rule it encodes).
+  - `content/reveal/dismantle.json` — Layer 4 second-beat copy: per
+    claim type (Big Five / political / life history / consumer profile),
+    a documentary breakdown with citations.
+  - `content/reveal/defense.json` — Layer 7 static content: opt-out
+    registries, tools, primary-source reading, crisis-line resources.
+  - `content/ads/templates.json` — 8 ad templates spanning financial,
+    productivity, lifestyle, dating, hobby, education.
+  - `content/scams/templates.json` — 7 scam scenario templates spanning
+    romance, authority, logistics, investment, tech-support, charity,
+    workplace.
+  - `content/recruiter/templates.json` — 5 recruiter pitch templates
+    spanning sales, engineering, ops, customer success, management.
+- **API** (`api/app/`):
+  - `routers/overreach.py` — `POST /sessions/{token}/overreach`. Rate
+    limited per IP (default 3/hour via `OVERREACH_RATE_LIMIT_PER_HOUR`).
+    Idempotent: a cached row is returned even when the limit is hit.
+    Returns 503 when `OVERREACH_ENABLED=false` or daily cost cap
+    exceeded; 429 when rate limited and no cached row exists; 200 on
+    success.
+  - `routers/reveal.py` — `POST /reveal-event`, `POST /stated-vs-revealed`,
+    `POST /broker-pricing`, `GET /targeting`, `POST /share-card`.
+  - `routers/reveal_content.py` — `GET /content/reveal-dismantle`,
+    `GET /content/reveal-defense`.
+  - `services/overreach.py` — engine wrapper with idempotency, cost cap
+    pre-check, daily-spend recording.
+  - `services/cost_cap.py` — `daily_spend` table reader/writer
+    (one row per UTC date).
+  - `services/rate_limit.py` — in-memory sliding-window per-IP limiter.
+  - `services/reveal.py` — wraps the rule-based engine modules
+    (stated_vs_revealed, pricing, targeting), persists their outputs as
+    Inference rows where applicable.
+  - `services/share_cards.py` — share-card metadata persistence
+    (no image bytes ever stored).
+  - `services/reveal_events.py` — writes `round="reveal"` events to
+    the existing `round_events` table for layer-entry instrumentation.
+  - `core/config.py` — added `ANTHROPIC_API_KEY`, `OVERREACH_ENABLED`,
+    `OVERREACH_MODEL`, `OVERREACH_DAILY_USD_CAP`,
+    `OVERREACH_RATE_LIMIT_PER_HOUR`.
+- **Database** (`api/migrations/versions/0002_phase3_share_cards_and_daily_spend.py`):
+  - New `daily_spend` table (date PK, total_usd, call_count, updated_at).
+  - `share_cards`: dropped `image_path`, added `image_dimensions`
+    (e.g., "1080x1920") and nullable `inference_id` (FK to inferences,
+    `ON DELETE SET NULL`). The card image is generated client-side via
+    html2canvas — no bytes server-side, no object storage.
+- **Web** (`web/src/`):
+  - `app/reveal/page.tsx` — replaces `app/reveal-stub/`. The 8-layer
+    machine: URL state via `?layer=1..8`, manual "Continue" gating, no
+    auto-advance, layer-entry events posted to the API. Overreach is
+    fetched lazily on first Layer-4 entry so the cost is not burned for
+    players who bounce before reaching it.
+  - `components/reveal/LayerShell.tsx` — generic shell with progress
+    dots (8 segments), eyebrow, title, content slot, and Continue
+    button. Used by every layer.
+  - `app/reveal/layers/Layer1..Layer8` — eight components, one per
+    layer. Layer 4 has a two-beat phase machine (fluent → dismantle).
+    Layer 8 generates the share image client-side via html2canvas in
+    either 1080×1920 (Stories) or 1200×630 (Twitter/LinkedIn) format.
+  - `app/reveal/lib/formatInference.ts` — moved (and extended) the
+    reveal-stub's `formatValue` helper plus a new `evidenceFor` for
+    Layer 2's evidence rows.
+  - `lib/api.ts`, `lib/schemas.ts` — added the Phase 3 endpoints and
+    Zod response shapes.
+  - `app/play/page.tsx` — final-round redirect now points at `/reveal`.
+- **Tests**:
+  - `engine/tests/test_overreach.py` (8 cases) — prompt assembly, the
+    happy path, retry-on-lexicon-hit, redaction-on-second-failure,
+    the no-key config error, and registry-shim behavior. The Anthropic
+    SDK is fully mocked.
+  - `engine/tests/test_pricing.py` (3 cases) — totals match expected
+    values for round-only and round+overreach inputs, empty-input is
+    safe.
+  - `engine/tests/test_targeting.py` (4 cases) — selection counts,
+    category diversity, every selected post-fill template passes the
+    lexicon filter, no-inference fallback.
+  - `api/tests/test_overreach.py` (5 cases) — idempotency, 429 after
+    the rate limit, 503 on cost cap exceeded, 503 when disabled,
+    persisted row passes the lexicon filter.
+- **Smoke test** (`scripts/smoke_phase3.py` + `make smoke-phase3`):
+  Walks land → consent → self-report → six rounds → all 8 reveal
+  endpoints + 8 layer-entry events + share-card creation; asserts 20
+  inference rows (17 round + stated_vs_revealed + overreach + broker_pricing)
+  and 1 share_cards row for the session. Mocks the Overreach LLM call.
+- **Phase-3 umbrella** (`make check-phase3`): runs `make lint`,
+  `make test`, then `make smoke-phase3`. Exits non-zero on any failure.
+- **Lint pipeline** — `check-lexicon` extended with a second exclusion
+  for `content/reveal/forbidden_lexicon.json` (the JSON source of truth
+  the LLM prompt and post-filter both load — like `docs/lexicon.md`,
+  it must enumerate the strings verbatim). The check's substantive
+  rules are unchanged.
+- **Docs**: README roadmap marks Phase 3 done. `make smoke-phase3` and
+  `make check-phase3` added to the Common-tasks table.
+
+### Phase 3 changed
+
+- `web/src/app/reveal-stub/` removed; replaced by `app/reveal/`.
+- `share_cards` row shape (see migration 0002).
+
+### Phase 3 phase-completion check outcomes
+
+- **J.3.1 (Lexicon survives generation)** — `make check-lexicon` and the
+  `find_violations` post-filter both pass. The mocked engine output
+  used in `make smoke-phase3` and `api/tests/test_overreach.py` is
+  lexicon-clean; the filter retry + redact paths are exercised by
+  `engine/tests/test_overreach.py`. End-to-end against the real
+  Anthropic API is deferred to live launch.
+- **J.3.2 (All 8 layers reachable)** — `make smoke-phase3` walks the
+  full flow; the `RoundEvent` table holds 8 `reveal_layer_entered`
+  rows (one per layer) and the `share_cards` table has 1 row.
+- **J.3.3 (Cost cap enforced)** — `api/tests/test_overreach.py
+  ::test_cost_cap_returns_503` pre-seeds today's `daily_spend` row
+  with 0.99 USD, sets the cap to 0.01 USD, and asserts a 503 response.
+- **J.3.4 (Round-agnostic + lexicon still pass)** — `make lint` is
+  green: `check-round-agnostic`, `check-lexicon`, `tsc`, ruff (api),
+  ruff (engine).
+- **Token + cost figures** — Mocked-only this phase: `(input=1200,
+  output=400, cost≈$0.0096)` per call. No real API calls were made.
+  Real-call telemetry will be captured at first live invocation.
+- **Prompt iteration history** — `PROMPT_VERSION = "overreach-2026-05-12-v1"`
+  is the only version shipped. Bump on substantive system-prompt
+  changes; every persisted Inference row carries the version it was
+  generated under.
+
 ## Phase 2 — Rounds 2–6 + lexicon enforcement (2026-05-12)
 
 ### Phase 2 added

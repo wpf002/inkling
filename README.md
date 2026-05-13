@@ -90,17 +90,19 @@ inkling/
 
 ## Common tasks
 
-| Command        | Action                                                          |
-| -------------- | --------------------------------------------------------------- |
-| `make up`      | Start Postgres                                                  |
-| `make api`     | Run FastAPI on :8000                                            |
-| `make web`     | Run Next.js on :3000                                            |
-| `make dev`     | Start infra + web + api                                         |
-| `make migrate` | Run alembic migrations                                          |
-| `make fmt`     | Format all code                                                 |
-| `make lint`    | Type-check + lint everything (round-agnostic + lexicon checks)  |
-| `make test`    | Run pytest across api + engine                                  |
-| `make psql`    | Drop into the dev DB                                            |
+| Command             | Action                                                     |
+| ------------------- | ---------------------------------------------------------- |
+| `make up`           | Start Postgres                                             |
+| `make api`          | Run FastAPI on :8000                                       |
+| `make web`          | Run Next.js on :3000                                       |
+| `make dev`          | Start infra + web + api                                    |
+| `make migrate`      | Run alembic migrations                                     |
+| `make fmt`          | Format all code                                            |
+| `make lint`         | Type-check + lint (round-agnostic + lexicon checks)        |
+| `make test`         | Run pytest across api + engine                             |
+| `make psql`         | Drop into the dev DB                                       |
+| `make smoke-phase3` | Walk all 8 reveal layers (mocked Overreach LLM)            |
+| `make check-phase3` | Phase 3 completion umbrella: lint + test + smoke           |
 
 ## Roadmap
 
@@ -124,14 +126,14 @@ inkling/
 - [x] Round orchestrator chaining all six rounds via `/play`
 - [x] `docs/lexicon.md` + `make check-lexicon` wired into `make lint`
 
-### Phase 3 — The reveal (weeks 6–7)
+### Phase 3 — The reveal (weeks 6–7) — DONE
 
-- [ ] Stated vs Revealed layer
-- [ ] All eight reveal layers (high → medium → overreach → product → targeting → defense → share)
-- [ ] LLM overreach layer
-- [ ] Targeting simulation
-- [ ] Profile-as-product card
-- [ ] Share card generation
+- [x] Stated vs Revealed layer
+- [x] All eight reveal layers (high → medium → overreach → product → targeting → defense → share)
+- [x] LLM overreach layer
+- [x] Targeting simulation
+- [x] Profile-as-product card
+- [x] Share card generation (client-side via html2canvas)
 
 ### Phase 4 — Reflection mode (weeks 8–9)
 

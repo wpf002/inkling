@@ -1,0 +1,29 @@
+{
+  "_note": "Source of truth for the overreach LLM's forbidden vocabulary. The strings in `terms` are the literal substrings the post-generation filter rejects and the system prompt enumerates verbatim. This file is excluded from `make check-lexicon` (the rule the strings encode), the same way docs/lexicon.md is excluded. Do not author player-facing copy from this file.",
+  "terms": [
+    "psychopath",
+    "sociopath",
+    "narcissist",
+    "gaslight",
+    "gaslighting",
+    "toxic person",
+    "inner child",
+    "healing journey",
+    "MBTI",
+    "enneagram",
+    "empath",
+    "love language",
+    "triggered",
+    "trigger",
+    "trauma",
+    "traumatic",
+    "traumatized",
+    "disorder",
+    "diagnosis",
+    "pathological",
+    "comorbid",
+    "anxiety",
+    "depression",
+    "ADHD"
+  ]
+}

@@ -16,6 +16,13 @@ class Settings(BaseSettings):
     age_gate_min: int = Field(default=18, alias="AGE_GATE_MIN")
     allowed_origins: list[str] = Field(default_factory=lambda: ["http://localhost:3000"])
 
+    # --- Phase 3: Overreach LLM controls ---
+    anthropic_api_key: str | None = Field(default=None, alias="ANTHROPIC_API_KEY")
+    overreach_enabled: bool = Field(default=True, alias="OVERREACH_ENABLED")
+    overreach_model: str = Field(default="claude-sonnet-4-6", alias="OVERREACH_MODEL")
+    overreach_daily_usd_cap: float = Field(default=50.0, alias="OVERREACH_DAILY_USD_CAP")
+    overreach_rate_limit_per_hour: int = Field(default=3, alias="OVERREACH_RATE_LIMIT_PER_HOUR")
+
 
 @lru_cache
 def get_settings() -> Settings:

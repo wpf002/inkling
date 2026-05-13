@@ -40,7 +40,7 @@ export default function PlayPage() {
   useEffect(() => {
     if (!sessionQuery.data) return;
     if (sessionQuery.data.next_round === null) {
-      router.replace("/reveal-stub");
+      router.replace("/reveal");
     }
   }, [sessionQuery.data, router]);
 

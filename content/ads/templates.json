@@ -1,0 +1,61 @@
+{
+  "_note": "Ad templates for Layer 6. Slots are {{construct_name}} and are filled from the player's strongest inferences using a fixed adjective vocab in engine/src/inkling_engine/reveal/targeting.py. Every line passes the lexicon check. Tone is recognizably marketing on purpose — the simulation is supposed to feel like an ad.",
+  "templates": [
+    {
+      "id": "ad_financial_robo",
+      "category": "financial",
+      "targeting_keys": ["loss_aversion", "risk_tolerance", "deliberation"],
+      "headline_template": "Built for {{loss_aversion}} investors.",
+      "body_template": "A {{risk_tolerance}} portfolio set up in nine minutes. Cancel anytime."
+    },
+    {
+      "id": "ad_productivity_focus",
+      "category": "productivity",
+      "targeting_keys": ["sustained_attention", "frustration_tolerance", "processing_speed"],
+      "headline_template": "Your focus, on a {{sustained_attention}} schedule.",
+      "body_template": "Plans built around how you actually work, including a {{frustration_tolerance}} reset between blocks."
+    },
+    {
+      "id": "ad_lifestyle_wellness",
+      "category": "lifestyle",
+      "targeting_keys": ["stress_response", "deliberation", "working_memory_span"],
+      "headline_template": "For {{stress_response}} weeks.",
+      "body_template": "A daily practice that meets you where you are — {{deliberation}}, twelve minutes, one screen."
+    },
+    {
+      "id": "ad_dating_compat",
+      "category": "dating",
+      "targeting_keys": ["initial_trust_propensity", "attribution_style", "personal_impersonal_sensitivity"],
+      "headline_template": "Meet people who are {{initial_trust_propensity}}.",
+      "body_template": "Profile prompts that surface how {{attribution_style}} you are with new connections."
+    },
+    {
+      "id": "ad_hobby_creator",
+      "category": "hobby",
+      "targeting_keys": ["working_memory_span", "deliberation", "performance_under_load"],
+      "headline_template": "Tools for {{working_memory_span}} makers.",
+      "body_template": "Project canvases that scale with you — {{performance_under_load}} layouts that hold the whole picture."
+    },
+    {
+      "id": "ad_education_cohort",
+      "category": "education",
+      "targeting_keys": ["sustained_attention", "utilitarian_leaning", "deliberation"],
+      "headline_template": "A cohort built for {{sustained_attention}} learners.",
+      "body_template": "Weekly assignments graded on {{utilitarian_leaning}} outcomes, not seat time."
+    },
+    {
+      "id": "ad_financial_credit",
+      "category": "financial",
+      "targeting_keys": ["risk_tolerance", "stress_response", "adaptation_rate"],
+      "headline_template": "A line of credit that respects {{risk_tolerance}} budgeting.",
+      "body_template": "Auto-pay rules tuned for {{stress_response}} months, with a soft cap you set in two taps."
+    },
+    {
+      "id": "ad_lifestyle_subscription",
+      "category": "lifestyle",
+      "targeting_keys": ["initial_trust_propensity", "adaptation_rate", "performance_under_load"],
+      "headline_template": "A subscription for {{initial_trust_propensity}} households.",
+      "body_template": "Curated weekly, {{adaptation_rate}} to what you actually use."
+    }
+  ]
+}

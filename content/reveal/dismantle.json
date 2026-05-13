@@ -1,0 +1,34 @@
+{
+  "_note": "Static, rule-based dismantle text for Level 4's second beat. Each block re-frames one of the four overreach claim types with a short, plain-English breakdown of how thin the actual evidence is. Author voice: a friend who actually read the papers, not a researcher writing for other researchers.",
+  "big_five": {
+    "title": "Big Five",
+    "summary": "Researchers have tried to predict the Big Five from things like phone use and short games. The best they've done lines up with about 3 to 5 percent of the actual variation between people. That's enough to publish a paper, way too thin to call this a portrait of anyone.",
+    "citations": [
+      "Stachl et al. (2020), PNAS — smartphone behavior predicts the Big Five at correlations of roughly 0.10 to 0.25.",
+      "Yarkoni & Westfall (2017), Perspectives on Psychological Science — when you actually test these models on new people, they hold up much less than the original headlines suggest."
+    ]
+  },
+  "political_values": {
+    "title": "Politics",
+    "summary": "Nobody has shown that 15 minutes of gameplay tells you anything real about how someone votes. The paragraph above sounds confident because it borrows the shape of a real read. There's no evidence underneath it.",
+    "citations": [
+      "Iyer et al. (2012), PLOS ONE — political leanings correlate with moral foundations on long surveys. They do not correlate with quick decision games."
+    ]
+  },
+  "life_history": {
+    "title": "Your life",
+    "summary": "There's no way to tell whether you're 24 or 54, partnered or single, college-educated or not, from how you played a short game. Brokers sell exactly this kind of guess every day under names like 'lifestyle enrichment' — confident sentences wearing a suit.",
+    "citations": [
+      "Christl & Spiekermann (2016), Networks of Control — overview of how brokers assemble and sell this kind of guessed-at lifestyle data."
+    ]
+  },
+  "consumer_profile": {
+    "title": "What you'd buy",
+    "summary": "This is the easiest one to sell and the one brokers actually make money on. Thousands of segments per person, fractions of a cent each, packaged for ad networks. The paragraph above is roughly what's for sale right now.",
+    "citations": [
+      "FTC (2014), Data Brokers: A Call for Transparency and Accountability — the canonical look at what's in these catalogs.",
+      "Crain (2018), New Media & Society — how the consumer-segment market actually works behind the scenes."
+    ]
+  },
+  "closing": "This is the gap. Fluent inference on one side, thin evidence on the other. The whole profiling industry lives in that gap, getting paid to sound confident anyway."
+}
